@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anjali's MP3</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="../css/music.css" />
+  </head>
+  <body>
+    <div class="main_div">
+      <div class="music_container">
+        <h2 id="title">Besharam Rang</h2>
+        <h3 id="artist">Shilpa Rao</h3>
+        <div class="img_container">
+          <img src="../images/img-1.jpg" alt="" />
+        </div>
+        <audio src="../audio/song-1.mp3 "></audio>
+
+        <!-- controls -->
+        <div class="music_controls">
+          <i class="fa fa-backward" id="prev" title="Previous"></i>
+          <i class="fa fa-play main_button" id="play" title="play"></i>
+          <i class="fa fa-forward" id="next" title="Next"></i>
+        </div>
+      </div>
+    </div>
+    <script>
+      const audio = document.querySelector("audio");
+      const img = document.querySelector("img");
+      const play = document.getElementById("play");
+      const artist = document.getElementById("artist");
+      const title = document.getElementById("title");
+      const prev = document.getElementById("prev");
+      const next = document.getElementById("next");
+
+      const songs = [
+        {
+          name: "song-1",
+          title: "Beshram Rang",
+          artist: "Shilpa Rao",
+          image: "img-1",
+        },
+        {
+          name: "song-2",
+          title: "Maan Meri Jaan",
+          artist: "King",
+          image: "img-2",
+        },
+        {
+          name: "song-3",
+          title: "Kyaa Baat Hai",
+          artist: "Hardy sandhu",
+          image: "img-3",
+        },
+      ];
+
+      play.addEventListener("click", () => {
+        // console.log(audio.paused)
+        if (audio.paused) {
+          play.classList.replace("fa-play", "fa-pause");
+
+          img.classList.add("anime");
+          audio.play();
+        } else {
+          play.classList.replace("fa-pause", "fa-play");
+
+          audio.pause();
+          img.classList.remove("anime");
+        }
+      });
+
+      const loadSong = (songs) => {
+        title.textContent = songs.title;
+        artist.textContent = songs.artist;
+        audio.src = "../audio/" + songs.name + ".mp3";
+        img.src = "../images/" + songs.image + ".jpg";
+      };
+      let SongIndex = 0;
+      //   loadSong(songs[2]);
+      const nextSong = () => {
+        SongIndex++;
+        if (SongIndex > 2) {
+          SongIndex = 0;
+        }
+
+        loadSong(songs[SongIndex]);
+        audio.play();
+      };
+      const prevSong = () => {
+        SongIndex--;
+
+        if (SongIndex < 0) {
+          SongIndex = songs.length - 1;
+        }
+        loadSong(songs[SongIndex]);
+        audio.play();
+      };
+
+      next.addEventListener("click", nextSong);
+      prev.addEventListener("click", prevSong);
+    </script>
+  </body>
+</html>
